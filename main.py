@@ -6,9 +6,12 @@ from loader import *
 
 
 class World:
-    def __init__(self):
-        self.people = []
-        self.relationships = []
+    def __init__(self, people):
+        self.people = people
+        self.relationships = set()
+        for p in self.people:
+            for r in p.relationships:
+                self.relationships.add(r)
 
     def get_person(self, name):
         return [p for p in self.people if p.name == name][0]
@@ -18,7 +21,7 @@ class World:
             return [r for r in self.relationships if name1 == r.people[0].name and name2 == r.people[1].name][0]
         except IndexError:
             r = Relationship(self.get_person(name1), self.get_person(name2))
-            self.relationships.append(r)
+            self.relationships.add(r)
             self.get_person(name1).relationships.append(r)
             self.get_person(name2).relationships.append(r)
             return r
@@ -41,7 +44,7 @@ class Location:
             p2 = random.choice(list(self.people.keys()))
             r = p1.get_relationship(p2)
             dist = distance(self.people[p1], self.people[p2])
-            v = (dist * r.innovation) - 1
+            gender = abs(p1.gender - p2.gender)
 
 
 class Conversation:
@@ -57,8 +60,11 @@ class Conversation:
 if __name__ == '__main__':
     people = load_people()
     load_relationships(people)
-    loc = Location(30)
-    loc.add_people(*people)
+    world = World(people)
+    loc = Location(20)
+    for person in people:
+        if person.name not in ['Miles',]:
+            loc.add_people(person)
     print(loc.people)
     while True:
         loc.tick()

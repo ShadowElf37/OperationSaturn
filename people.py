@@ -24,8 +24,8 @@ class Person:
 class Relationship:
     def __init__(self, p1, p2):
         self.people = [p1, p2]
-        self.tolerance = {p1:.0, p2:.0}  # What each person thinks of the other
+        self.tolerance = {p1:.1, p2:.1}  # What each person thinks of the other
         self.strength = {p1:.0, p2:.0}  # Perceived comfort between the two people
-        self.innovation = {p1:.0, p2:.0}  # Current desire to strengthen a relationship
+        self.innovation = {p1:.1, p2:.1}  # Current desire to strengthen a relationship
         self.intimacy = {p1:.0, p2:.0}  # How intimate or trusting the relationship is
         self.similarity = {p1:.0, p2:.0}  # How similar the people are
